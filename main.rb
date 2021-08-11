@@ -2,7 +2,7 @@
 
 require 'onlyoffice_s3_wrapper'
 
-# filename_from_txt = []
+
 FileUtils.makedirs('./tmp')
 @tmp_dir = './tmp'
 @arr = %w[doc csv]
