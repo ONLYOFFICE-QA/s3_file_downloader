@@ -2,10 +2,10 @@
 
 require 'onlyoffice_s3_wrapper'
 
-filename_from_txt = []
-filename = s3.get_files_by_prefix('doc/')
+# filename_from_txt = []
 FileUtils.makedirs('./tmp')
 @tmp_dir = './tmp'
+@arr = %w[doc csv]
 
 def s3
   @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
@@ -20,12 +20,29 @@ def download(lib)
   end
 end
 
-
-File.open("text.txt", "r") do |file|
-  file.readlines().each do |line|
-    filename_from_txt.push(line)
-  end
+def download_all
+  filename = s3.get_files_by_prefix()
+  download(filename)
 end
 
-download(filename)
+def download_from_file
+  filename_from_txt = []
+  File.open("example.txt", "r") do |file|
+    file.readlines().each do |line|
+      filename_from_txt.push(line)
+    end
+  end
+  download(filename_from_txt)
+end
 
+def download_by_prefix(prefix)
+  filename = s3.get_files_by_prefix("#{prefix}/")
+  download(filename)
+end
+
+def download_by_prefix2
+  @arr.each do |el|
+    filename = s3.get_files_by_prefix("#{el}/")
+    download(filename)
+  end
+end
