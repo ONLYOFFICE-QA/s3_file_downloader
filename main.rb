@@ -2,7 +2,6 @@
 
 require 'onlyoffice_s3_wrapper'
 
-
 FileUtils.makedirs('./tmp')
 @tmp_dir = './tmp'
 @arr = %w[doc csv]
@@ -40,9 +39,11 @@ def download_by_prefix(prefix)
   download(filename)
 end
 
-def download_by_prefix2
+def download_by_array
   @arr.each do |el|
     filename = s3.get_files_by_prefix("#{el}/")
     download(filename)
   end
 end
+
+

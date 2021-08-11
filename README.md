@@ -11,3 +11,5 @@ Script for downloading files from AWS.amazon.com
 ## Run script
 
 ```ruby main.rb```
+
+rake download_by_prefix extension=csv
