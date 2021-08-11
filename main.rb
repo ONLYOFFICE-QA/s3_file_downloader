@@ -7,6 +7,7 @@ def s3
 end
 
 files = s3.get_files_by_prefix('doc/')
+FileUtils.makedirs("./tmp")
 @tmp_dir = './tmp'
 
 files.each do |el|
