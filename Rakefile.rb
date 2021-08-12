@@ -1,23 +1,29 @@
 # frozen_string_literal: true
 
 require_relative 'main'
-desc 'convert files from custom configure.json'
-# rake convert
+desc 'Download all files'
 task :download_all do |_t|
   download_all
 end
 
+desc 'Download files from the file'
 task :download_from_file do |_t|
   download_from_file
 end
 
-task :download_by_prefix do |_t|
-  puts 'Please enter the file extension: '
+desc 'Download files by extension. Example command: "rake download_by_prefix extension=csv"'
+# rake download_by_prefix extension=csv
+task :download_by_extension do |_t|
   extension = ENV['extension']
-  download_by_prefix(extension)
+  download_by_extension(extension)
 end
 
-task :download_by_array do |_t|
-  download_by_array
+desc 'Download files by extensions from array'
+task :download_by_array_extension do |_t|
+  download_by_array_extension
 end
 
+desc 'Download files by filenames from array'
+task :download_by_array_filenames do |_t|
+  download_by_array_filenames
+end

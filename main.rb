@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 require 'onlyoffice_s3_wrapper'
+require './variables'
 
 FileUtils.makedirs('./tmp')
 @tmp_dir = './tmp'
-@arr = %w[doc csv]
+
 
 def s3
   @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
@@ -12,38 +13,39 @@ end
 
 def download(lib)
   lib.each do |el|
-    el.sub!(/['\n']?$/, '')
     p("Starting downloading file: #{el}")
-    # print(el)
     s3.download_file_by_name(el, @tmp_dir)
   end
 end
 
 def download_all
-  filename = s3.get_files_by_prefix()
+  filename = s3.get_files_by_prefix
   download(filename)
 end
 
 def download_from_file
   filename_from_txt = []
-  File.open("example.txt", "r") do |file|
-    file.readlines().each do |line|
+  File.open("array_of_files.txt", "r") do |file|
+    file.readlines.each do |line|
+      line.sub!("\n", '')
       filename_from_txt.push(line)
     end
   end
   download(filename_from_txt)
 end
 
-def download_by_prefix(prefix)
-  filename = s3.get_files_by_prefix("#{prefix}/")
+def download_by_extension(extension)
+  filename = s3.get_files_by_prefix("#{extension}/")
   download(filename)
 end
 
-def download_by_array
-  @arr.each do |el|
+def download_by_array_extension
+  @arr_extension.each do |el|
     filename = s3.get_files_by_prefix("#{el}/")
     download(filename)
   end
 end
 
-
+def download_by_array_filenames
+  download(@arr_file_names)
+end
