@@ -20,7 +20,7 @@ Commands for running:
 
 ```rake download_from_file```  - For download files. Reading the array of files comes from "./example.txt"
 
-```rake download_by_prefix extension=doc```  - For download files by extension. Example command: "rake download_by_extension extension=csv"
+```rake download_by_extension extension=doc```  - For download files by extension. Example command: "rake download_by_extension extension=csv"
 
 ```rake download_by_array_extension```  - For download files by extensions from array. The array is in the file "./variables.rb". Change "@arr_extension"
 
