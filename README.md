@@ -36,4 +36,4 @@ Change "FILE_NAMES_ARRAY".')
 
 Used when using the flag ```ext``` to pass the expansion
 
-Example: rake download[ext,<extension>]
+```Example: rake download[ext,doc]```
