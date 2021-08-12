@@ -12,16 +12,28 @@ Script for downloading files from aws.amazon.com
 
 ```bundle install```
 
-# Usage
+## Usage
 
 Commands for running:
 
-```rake download_all```  - For download all files
+```rake download[download_flag,extension] ```
 
-```rake download_from_file```  - For download files. Reading the array of files comes from "./example.txt"
+##### download_flag
 
-```rake download_by_extension extension=doc```  - For download files by extension. Example command: "rake download_by_extension extension=csv"
+```all``` - For download all files
 
-```rake download_by_array_extension```  - For download files by extensions from array. The array is in the file "./variables.rb". Change "@arr_extension"
+```file``` - For download files. Reading the array of files comes from "./array_of_files.txt"
 
-```rake download_by_array_filenames```  - For download files by file names from array. The array is in the file "./variables.rb". Change "@arr_file_names"
+```ext``` - For download files by extension.  You must specify the extension
+
+```arrext``` -  For download files by extensions from array.
+The array is in the file "./data/static_data.rb". Change "EXTENSION_ARRAY"
+
+```arrfile``` -  For download files by file names from array. The array is in the file "./data/static_data.rb".
+Change "FILE_NAMES_ARRAY".')
+
+##### extension
+
+Used when using the flag ```ext``` to pass the expansion
+
+Example: rake download[ext,<extension>]
