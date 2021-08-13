@@ -5,8 +5,11 @@ require_relative 'data/static_data'
 
 # Methods for download files
 class Downloader
-  FileUtils.makedirs('./tmp')
-  @tmp_dir = './tmp'
+  def initialize
+    FileUtils.makedirs('./tmp')
+    @tmp_dir = './tmp'
+  end
+
   def s3
     @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
   end
