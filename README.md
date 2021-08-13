@@ -18,22 +18,22 @@ Commands for running:
 
 ```rake download[download_flag,extension] ```
 
-##### download_flag
+### download_flag
 
-```all``` - For download all files
+```all``` - To download all files
 
-```file``` - For download files. Reading the array of files comes from "./array_of_files.txt"
+```file``` - To download files. Reading the array of files comes from "./array_of_files.txt"
 
-```ext``` - For download files by extension.  You must specify the extension
+```ext``` - To download files by extension.  You must specify the extension
 
-```arrext``` -  For download files by extensions from array.
+```arrext``` -  To download files by extensions from array.
 The array is in the file "./data/static_data.rb". Change "EXTENSION_ARRAY"
 
-```arrfile``` -  For download files by file names from array. The array is in the file "./data/static_data.rb".
+```arrfile``` -  To download files by file names from array. The array is in the file "./data/static_data.rb".
 Change "FILE_NAMES_ARRAY".')
 
-##### extension
+### extension
 
-Used when using the flag ```ext``` to pass the expansion
+Used with the flag ```ext``` to pass the expansion
 
-Example: rake download[ext,<extension>]
+Example: ```rake download[ext,doc]```
