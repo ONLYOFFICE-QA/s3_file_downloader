@@ -52,4 +52,25 @@ class Downloader
   def download_by_array_filenames
     download(StaticData::FILE_NAMES_ARRAY)
   end
+
+  def download_with_options(download_flag, extension)
+    case download_flag
+    when :all
+      download_all
+    when :file
+      download_from_file
+    when :ext
+      puts('Please, enter extension. Example: rake download[ext,<extension>]') if extension == ''
+      download_by_extension(extension)
+    when :arrext
+      download_by_array_extension
+    when :arrfile
+      download_by_array_filenames
+    else
+      message = 'Input Error' \
+                    'Please,enter the correct parameters' \
+                    'Example: rake download[parameter,extension]'
+      puts(message)
+    end
+  end
 end
