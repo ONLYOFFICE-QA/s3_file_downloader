@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'onlyoffice_s3_wrapper'
-require_relative 'data/static_data'
+require_relative '../data/static_data'
 
 # Methods for download files
 class Downloader
@@ -28,7 +28,7 @@ class Downloader
 
   def download_from_file
     filename_from_txt = []
-    File.open("array_of_files.txt", "r") do |file|
+    File.open('array_of_files.txt', 'r') do |file|
       file.readlines.each do |line|
         line.sub!("\n", '')
         filename_from_txt.push(line)
