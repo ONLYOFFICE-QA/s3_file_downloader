@@ -3,50 +3,49 @@
 require 'onlyoffice_s3_wrapper'
 require_relative '../data/static_data'
 
-
 # Methods for download files
 class Downloader
   def initialize
-    FileUtils.makedirs('./tmp')
     @tmp_dir = './tmp'
+    FileUtils.makedirs(@tmp_dir)
   end
 
   def s3
     @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
   end
 
-  def download(lib)
-    lib.each do |el|
-      p("Starting downloading file: #{el}")
-      s3.download_file_by_name(el, @tmp_dir)
+  def download(array_of_files)
+    array_of_files.each do |filename|
+      p("Starting downloading file: #{filename}")
+      s3.download_file_by_name(filename, @tmp_dir)
     end
   end
 
   def download_all
-    filename = s3.get_files_by_prefix
-    download(filename)
+    array_of_files = s3.get_files_by_prefix
+    download(array_of_files)
   end
 
   def download_from_file
-    filename_from_txt = []
+    array_of_files = []
     File.open('./data/files_to_download.list', 'r') do |file|
       file.readlines.each do |line|
         line.sub!("\n", '')
-        filename_from_txt.push(line)
+        array_of_files.push(line)
       end
     end
-    download(filename_from_txt)
+    download(array_of_files)
   end
 
   def download_by_extension(extension)
-    filename = s3.get_files_by_prefix("#{extension}/")
-    download(filename)
+    array_of_files = s3.get_files_by_prefix("#{extension}/")
+    download(array_of_files)
   end
 
   def download_by_array_extension
-    StaticData::EXTENSION_ARRAY.each do |el|
-      filename = s3.get_files_by_prefix("#{el}/")
-      download(filename)
+    StaticData::EXTENSION_ARRAY.each do |extension|
+      array_of_files = s3.get_files_by_prefix("#{extension}/")
+      download(array_of_files)
     end
   end
 
