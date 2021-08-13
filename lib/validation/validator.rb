@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # use Validator.new.validator_for_download
-class Validation
+class Validator
   def validator_for_download(download_flag, extension)
     case download_flag
     when 'all'
