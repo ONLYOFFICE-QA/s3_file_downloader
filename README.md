@@ -16,7 +16,7 @@ Script for downloading files from aws.amazon.com
 
 ```rake download[all]``` - To download all files
 
-```rake download[file]``` - To download files. Reading the array of files comes from "./array_of_files.txt"
+```rake download[file]``` - To download files. Reading the array of files comes from "./data/files_to_download.list"
 
 ```rake download[ext,your extension]``` - To download files by extension.  You must specify the extension, the second parameter.
 

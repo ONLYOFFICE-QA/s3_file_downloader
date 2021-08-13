@@ -3,6 +3,7 @@
 require 'onlyoffice_s3_wrapper'
 require_relative '../data/static_data'
 
+
 # Methods for download files
 class Downloader
   def initialize
@@ -28,7 +29,7 @@ class Downloader
 
   def download_from_file
     filename_from_txt = []
-    File.open('array_of_files.txt', 'r') do |file|
+    File.open('./data/files_to_download.list', 'r') do |file|
       file.readlines.each do |line|
         line.sub!("\n", '')
         filename_from_txt.push(line)
