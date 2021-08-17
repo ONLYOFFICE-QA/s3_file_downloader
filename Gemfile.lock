@@ -37,6 +37,7 @@ GEM
       ast (~> 2.4.1)
     racc (1.5.2)
     rainbow (3.0.0)
+    rake (13.0.6)
     regexp_parser (2.1.1)
     rexml (3.2.5)
     rubocop (1.18.4)
@@ -62,6 +63,7 @@ PLATFORMS
 DEPENDENCIES
   onlyoffice_s3_wrapper
   ooxml_parser
+  rake
   rubocop
   webrick
 
