@@ -14,10 +14,21 @@ class Downloader
     @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
   end
 
+  # The method checks the existence of the directory,
+  # and if it does not exist, creates a new one using the name as a parameter
+  def create_dir(dir_name)
+    unless File.exist? dir_name
+      FileUtils.makedirs(dir_name)
+      puts "Directory #{dir_name} created"
+    end
+  end
+
   def download(array_of_files)
     array_of_files.each do |filename|
+      dir_name = filename.split('/')[0]
+      create_dir("#{@tmp_dir}/#{dir_name}")
       p("Starting downloading file: #{filename}")
-      s3.download_file_by_name(filename, @tmp_dir)
+      s3.download_file_by_name(filename, "#{@tmp_dir}/#{dir_name}")
     end
   end
 
