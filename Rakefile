@@ -8,3 +8,12 @@ task :download, :download_flag, :extension do |_t, args|
   extension = args[:extension].to_s
   Downloader.new.download_with_options(download_flag, extension)
 end
+
+desc 'Download files for docker'
+task :docker do |_t|
+  download_flag = ENV['FlAG'].to_sym
+  extension = ENV['EXT'].to_s
+  downloader = Downloader.new
+  downloader.key_writer
+  downloader.download_with_options(download_flag, extension)
+end
