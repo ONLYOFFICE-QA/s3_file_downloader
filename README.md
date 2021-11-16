@@ -30,12 +30,13 @@ Script for downloading files from aws.amazon.com
 
 An example of a startup with additional options
 
-```
-sudo docker run -v /home/l02/lnx_db/downloader/downloaded_files:/downloader/tmp \
--e S3_KEY=AKIAQYJDILMUY3WAM457 \
--e S3_PRIVATE_KEY=u5MGHtXV5uKPiIucf6przMZEpTbIow1ektzMFzMw \
--e EXT=pdf s3_file_downloader
-```
+
+  ```
+  sudo docker run -v <the path to the downloaded files>:/downloader/tmp \
+  -e S3_KEY=<is a public s3 key for getting files> \
+  -e S3_PRIVATE_KEY=<is a private s3 key for getting files> s3_file_downloader
+  ```
+
 
 ## Running without a docker
 
