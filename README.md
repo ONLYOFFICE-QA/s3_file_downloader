@@ -34,7 +34,8 @@ An example of a startup with additional options
   ```
   sudo docker run -v <the path to the downloaded files>:/downloader/tmp \
   -e S3_KEY=<is a public s3 key for getting files> \
-  -e S3_PRIVATE_KEY=<is a private s3 key for getting files> s3_file_downloader
+  -e S3_PRIVATE_KEY=<is a private s3 key for getting files>  \
+  -e EXT=ppt s3_file_downloader
   ```
 
 
