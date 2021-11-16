@@ -4,36 +4,61 @@
 
 Script for downloading files from aws.amazon.com
 
+## Running in a docker
+
+### Requirements:
+
+* Docker
+
+### Getting Started
+
+* First you need to build a docker image
+
+  ```sudo docker build -t s3_file_downloader .```
+
+* Then, to download all the files, run
+
+  ```
+  sudo docker run -v <the path to the downloaded files>:/downloader/tmp \
+  -e S3_KEY=<is a public s3 key for getting files> \
+  -e S3_PRIVATE_KEY=<is a private s3 key for getting files> s3_file_downloader
+  ```
+
+* Additional options for downloading files, add to the start command.
+
+```-e EXT=<download extension>``` - To download files by extension. 
+
+An example of a startup with additional options
+
+```
+sudo docker run -v /home/l02/lnx_db/downloader/downloaded_files:/downloader/tmp \
+-e S3_KEY=AKIAQYJDILMUY3WAM457 \
+-e S3_PRIVATE_KEY=u5MGHtXV5uKPiIucf6przMZEpTbIow1ektzMFzMw \
+-e EXT=pdf s3_file_downloader
+```
+
+## Running without a docker
+
 ## Requirements:
 
 * Ruby
 
-## Getting Started
-###Change dockerfile and docker-compose file.
+## Installation
 
-* Set 2 environment variables in dockerfile:
+```bundle install```
 
-     - **S3_KEY** - is a public s3 key for getting files
-     - **3_PRIVATE_KEY** - is a private s3 key for getting files
-  
-###Change value ``command``  in the docker-compose.yml file to load files
-  
-Examples of Commands:
+## Usage
 
-```["rake", "download[all]"]``` - To download all files
+```rake download[all]``` - To download all files
 
-```["rake", "download[file]"]``` - To download files. Reading the array of files comes from "./data/files_to_download.list"
+```rake download[file]``` - To download files. Reading the array of files comes from "./data/files_to_download.list"
 
-```["rake", "download[ext,your extension]"]``` - To download files by extension.  You must specify the extension, the second parameter.
+```rake download[ext,your extension]``` - To download files by extension.  You must specify the extension, the second parameter.
 
-```["rake', "download[arrext]"]``` -  To download files by extensions from array.
+```rake download[arrext]``` -  To download files by extensions from array.
 The array is in the file "./data/static_data.rb". Change "EXTENSION_ARRAY"
 
-```["rake", "download[arrfile]"]```-  To download files by file names from array. The array is in the file "./data/static_data.rb".
-Change "FILE_NAMES_ARRAY".'
+```rake download[arrfile]``` -  To download files by file names from array. The array is in the file "./data/static_data.rb".
+Change "FILE_NAMES_ARRAY".')
 
-Then, run docker-compose for download files
-
-``docker-compose up``
-
-The files will be downloaded to "downloaded_files" folder. 
+### the files will be downloaded to the tmp folder
