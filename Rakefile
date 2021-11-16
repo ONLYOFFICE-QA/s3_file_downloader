@@ -11,7 +11,11 @@ end
 
 desc 'Download files for docker'
 task :docker do |_t|
-  download_flag = ENV['FlAG'].to_sym
+  download_flag = if ENV['EXT'] != ''
+                    :ext
+                  else
+                    ENV['FlAG'].to_sym
+                  end
   extension = ENV['EXT'].to_s
   downloader = Downloader.new
   downloader.key_writer
