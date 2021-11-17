@@ -18,6 +18,6 @@ task :docker do |_t|
                   end
   extension = ENV['EXT'].to_s
   downloader = Downloader.new
-  downloader.key_writer
+  downloader.s3_key_writer
   downloader.download_with_options(download_flag, extension)
 end

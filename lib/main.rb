@@ -32,6 +32,7 @@ class Downloader
         s3.download_file_by_name(filename, "#{@tmp_dir}/#{dir_name}")
       rescue StandardError
         p("Failed download:#{filename}")
+        logger("#{@tmp_dir}/Failed_download_log.txt", "Failed download: #{filename}\n", 'a')
       end
     end
   end
@@ -64,14 +65,16 @@ class Downloader
     end
   end
 
-  def key_writer
+  def logger(path_to_file, text, write_param)
+    log = File.new(path_to_file, "#{write_param}:UTF-8")
+    log.print(text)
+    log.close
+  end
+
+  def s3_key_writer
     home = ENV['HOME']
-    s3key = File.new("#{home}/.s3/key", 'w:UTF-8')
-    s3private_key = File.new("#{home}/.s3/private_key", 'w:UTF-8')
-    s3key.print(ENV['S3_KEY'])
-    s3private_key.print(ENV['S3_PRIVATE_KEY'])
-    s3key.close
-    s3private_key.close
+    logger("#{home}/.s3/key", ENV['S3_KEY'], 'w')
+    logger("#{home}/.s3/private_key", ENV['S3_PRIVATE_KEY'], 'w')
   end
 
   def download_by_array_filenames
