@@ -6,9 +6,7 @@ ENV FlAG "all"
 ENV EXT ""
 
 RUN mkdir -pv ~/.s3
-RUN apt update
 RUN gem install bundler
-RUN gem update --system
 RUN mkdir /downloader
 WORKDIR /downloader
 ADD . /downloader
