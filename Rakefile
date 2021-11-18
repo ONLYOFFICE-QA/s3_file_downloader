@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'lib/main'
-require_relative 'lib/helper'
+require_relative 'lib/config'
 
 desc 'Download files'
 task :download, :download_flag, :extension do |_t, args|
@@ -18,6 +18,6 @@ task :docker do |_t|
                     ENV['FlAG'].to_sym
                   end
   extension = ENV['EXT'].to_s
-  Helper.init_s3_from_env
+  Config.init_s3_from_env
   Downloader.new.download_with_options(download_flag, extension)
 end

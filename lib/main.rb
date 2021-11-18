@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'onlyoffice_s3_wrapper'
 require_relative '../data/static_data'
 
@@ -8,6 +9,8 @@ class Downloader
   def initialize
     @tmp_dir = './tmp'
     FileUtils.makedirs(@tmp_dir)
+    @logger = Logger.new("#{@tmp_dir}/Failed_download_log")
+    @logger_stdout = Logger.new($stdout)
   end
 
   def s3
@@ -31,8 +34,8 @@ class Downloader
       begin
         s3.download_file_by_name(filename, "#{@tmp_dir}/#{dir_name}")
       rescue StandardError
-        p("Failed download:#{filename}")
-        Helper.file_writer("#{@tmp_dir}/Failed_download_log.txt", "Failed download: #{filename}\n", 'a')
+        @logger_stdout.error("Failed to download file: #{filename}")
+        @logger.error("Failed to download file: #{filename}")
       end
     end
   end
