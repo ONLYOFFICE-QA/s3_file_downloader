@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'onlyoffice_s3_wrapper'
 require_relative '../data/static_data'
 
@@ -8,16 +9,34 @@ class Downloader
   def initialize
     @tmp_dir = './tmp'
     FileUtils.makedirs(@tmp_dir)
+    @logger = Logger.new("#{@tmp_dir}/Failed_download_log")
+    @logger_stdout = Logger.new($stdout)
   end
 
   def s3
     @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
   end
 
+  # The method checks the existence of the directory,
+  # and if it does not exist, creates a new one using the name as a parameter
+  def create_dir(dir_name)
+    return if File.exist? dir_name
+
+    FileUtils.makedirs(dir_name)
+    puts "Directory #{dir_name} created"
+  end
+
   def download(array_of_files)
     array_of_files.each do |filename|
+      dir_name = filename.split('/')[0]
+      create_dir("#{@tmp_dir}/#{dir_name}")
       p("Starting downloading file: #{filename}")
-      s3.download_file_by_name(filename, @tmp_dir)
+      begin
+        s3.download_file_by_name(filename, "#{@tmp_dir}/#{dir_name}")
+      rescue StandardError
+        @logger_stdout.error("Failed to download file: #{filename}")
+        @logger.error("Failed to download file: #{filename}")
+      end
     end
   end
 
