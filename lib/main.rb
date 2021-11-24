@@ -30,15 +30,15 @@ class Downloader
     array_of_files.each do |filename|
       dir_name = filename.split('/')[0]
       if File.exist? "#{@tmp_dir}/#{filename}"
-        @logger_stdout.info("File Exist #{filename}")
+        @logger_stdout.info("File `#{filename}` already downloaded")
       else
         create_dir("#{@tmp_dir}/#{dir_name}")
         @logger_stdout.info("Starting to download a file: #{filename}")
         begin
           s3.download_file_by_name(filename, "#{@tmp_dir}/#{dir_name}")
-        rescue StandardError
-          @logger_stdout.error("Failed to download file: #{filename}")
-          @logger.error("Failed to download file: #{filename}")
+        rescue StandardError => e
+          @logger_stdout.error("Error: '#{e}' happened while downloading #{filename}")
+          @logger.error("Error: '#{e}' happened while downloading #{filename}")
         end
       end
     end
