@@ -6,22 +6,12 @@ Script for downloading files from aws.amazon.com
 
 ## Running in a docker
 
-### Requirements
-
-* Docker
-
-### Getting Started
-
-* First you need to build a docker image
-
-  ``sudo docker build -t s3_file_downloader .``
-
-* Then, to download all the files, run
+### Running Docker Image
 
   ```bash
-  sudo docker run -v <the path to the downloaded files>:/downloader/tmp \
+  docker run -v <the path to the downloaded files>:/downloader/tmp \
   -e S3_KEY=<is a public s3 key for getting files> \
-  -e S3_PRIVATE_KEY=<is a private s3 key for getting files> s3_file_downloader
+  -e S3_PRIVATE_KEY=<is a private s3 key for getting files> onlyofficeqa/s3_file_downloader:latest
   ```
 
 * Additional options for downloading files, add to the start command.
@@ -31,15 +21,15 @@ Script for downloading files from aws.amazon.com
 An example of a startup with additional options
 
   ```bash
-  sudo docker run -v <the path to the downloaded files>:/downloader/tmp \
+  docker run -v <the path to the downloaded files>:/downloader/tmp \
   -e S3_KEY=<is a public s3 key for getting files> \
   -e S3_PRIVATE_KEY=<is a private s3 key for getting files>  \
-  -e EXT=ppt s3_file_downloader
+  -e EXT=ppt onlyofficeqa/s3_file_downloader:latest
   ```
 
 ## Running without a docker
 
-### Requirements for Running without a docker
+### Requirements
 
 * Ruby
 
