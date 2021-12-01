@@ -8,22 +8,47 @@ Script for downloading files from aws.amazon.com
 
 ### Running Docker Image
 
+#### For linux
+
   ```bash
   docker run -v <the path to the downloaded files>:/downloader/tmp \
   -e S3_KEY=<is a public s3 key for getting files> \
   -e S3_PRIVATE_KEY=<is a private s3 key for getting files> onlyofficeqa/s3_file_downloader:latest
   ```
 
-* Additional options for downloading files, add to the start command.
+#### For Windows
+
+Open CMD as administrator and insert the command
+
+```bash
+  docker run -v %USERPROFILE%\Downloads\s3_files:/downloader/tmp ^
+   -e S3_KEY=<is a public s3 key for getting files> ^
+   -e S3_PRIVATE_KEY=<is a private s3 key for getting files> onlyofficeqa/s3_file_downloader:latest
+ ```
+
+the files will be downloaded to Downloads\s3_files folder
+
+#### Additional options for downloading files, add to the start command
 
 ``-e EXT=<download extension>`` - To download files by extension.
 
 An example of a startup with additional options
 
+* For linux
+
   ```bash
   docker run -v <the path to the downloaded files>:/downloader/tmp \
   -e S3_KEY=<is a public s3 key for getting files> \
   -e S3_PRIVATE_KEY=<is a private s3 key for getting files>  \
+  -e EXT=ppt onlyofficeqa/s3_file_downloader:latest
+  ```
+
+* For Windows
+
+  ```bash
+  docker run -v <the path to the downloaded files>:/downloader/tmp ^
+  -e S3_KEY=<is a public s3 key for getting files> ^
+  -e S3_PRIVATE_KEY=<is a private s3 key for getting files>  ^
   -e EXT=ppt onlyofficeqa/s3_file_downloader:latest
   ```
 
