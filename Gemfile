@@ -4,7 +4,7 @@ Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
 source 'https://rubygems.org'
-gem 'onlyoffice_s3_wrapper'
+gem 'onlyoffice_s3_wrapper', '>= 0.6.0'
 gem 'rake'
 gem 'rubocop'
 gem 'webrick'
