@@ -23,7 +23,7 @@ GEM
       onlyoffice_logger_helper (~> 1)
       rubyzip (~> 2)
     onlyoffice_logger_helper (1.2.0)
-    onlyoffice_s3_wrapper (0.5.0)
+    onlyoffice_s3_wrapper (0.6.0)
       aws-sdk-s3 (~> 1)
       onlyoffice_file_helper (~> 0)
     parallel (1.21.0)
@@ -53,7 +53,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  onlyoffice_s3_wrapper
+  onlyoffice_s3_wrapper (>= 0.6.0)
   rake
   rubocop
   webrick

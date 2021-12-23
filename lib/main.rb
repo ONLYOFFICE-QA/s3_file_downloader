@@ -61,13 +61,13 @@ class Downloader
   end
 
   def download_by_extension(extension)
-    array_of_files = s3.get_files_by_prefix("#{extension}/")
+    array_of_files = s3.files_from_folder(extension.to_s)
     download(array_of_files)
   end
 
   def download_by_array_extension
     StaticData::EXTENSION_ARRAY.each do |extension|
-      array_of_files = s3.get_files_by_prefix("#{extension}/")
+      array_of_files = s3.files_from_folder(extension.to_s)
       download(array_of_files)
     end
   end
