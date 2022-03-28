@@ -26,7 +26,7 @@ GEM
     onlyoffice_s3_wrapper (0.6.0)
       aws-sdk-s3 (~> 1)
       onlyoffice_file_helper (~> 0)
-    parallel (1.22.0)
+    parallel (1.22.1)
     parser (3.1.1.0)
       ast (~> 2.4.1)
     rainbow (3.1.1)
