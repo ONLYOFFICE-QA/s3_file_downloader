@@ -7,6 +7,8 @@ ENV EXT ""
 
 RUN mkdir -pv ~/.s3
 RUN gem install bundler
+RUN apk update && \
+    apk add --no-cache build-base
 RUN mkdir /downloader
 WORKDIR /downloader
 ADD . /downloader
