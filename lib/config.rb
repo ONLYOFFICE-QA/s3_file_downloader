@@ -3,8 +3,8 @@
 # Configuration methods for running a script in docker
 class Config
   def self.init_s3_from_env
-    file_writer("#{Dir.home}/.s3/key", ENV['S3_KEY'], 'w')
-    file_writer("#{Dir.home}/.s3/private_key", ENV['S3_PRIVATE_KEY'], 'w')
+    file_writer("#{Dir.home}/.s3/key", ENV.fetch('S3_KEY'), 'w')
+    file_writer("#{Dir.home}/.s3/private_key", ENV.fetch('S3_PRIVATE_KEY'), 'w')
   end
 
   def self.file_writer(path_to_file, text, write_param)

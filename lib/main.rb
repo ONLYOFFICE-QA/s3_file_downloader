@@ -91,8 +91,8 @@ class Downloader
       download_by_array_filenames
     else
       message = 'Input Error' \
-                    'Please,enter the correct parameters' \
-                    'Example: rake download[parameter,extension]'
+                'Please,enter the correct parameters' \
+                'Example: rake download[parameter,extension]'
       puts(message)
     end
   end
