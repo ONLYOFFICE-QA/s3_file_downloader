@@ -12,10 +12,10 @@ end
 
 desc 'Download files for docker'
 task :docker do |_t|
-  download_flag = if ENV['EXT'] != ''
-                    :ext
-                  else
+  download_flag = if ENV['EXT'] == ''
                     ENV['FlAG'].to_sym
+                  else
+                    :ext
                   end
   extension = ENV['EXT'].to_s
   Config.init_s3_from_env
