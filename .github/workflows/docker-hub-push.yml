@@ -17,6 +17,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: onlyofficeqa/s3_file_downloader:latest
+          tags: onlyoffice/s3_file_downloader:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
