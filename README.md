@@ -13,7 +13,7 @@ Script for downloading files from aws.amazon.com
   ```bash
   docker run -v <the path to the downloaded files>:/downloader/tmp \
   -e S3_KEY=<is a public s3 key for getting files> \
-  -e S3_PRIVATE_KEY=<is a private s3 key for getting files> onlyofficeqa/s3_file_downloader:latest
+  -e S3_PRIVATE_KEY=<is a private s3 key for getting files> onlyoffice/s3_file_downloader:latest
   ```
 
 #### For Windows
@@ -23,7 +23,7 @@ Open CMD as administrator and insert the command
 ```bash
   docker run -v %USERPROFILE%\Downloads\s3_files:/downloader/tmp ^
    -e S3_KEY=<is a public s3 key for getting files> ^
-   -e S3_PRIVATE_KEY=<is a private s3 key for getting files> onlyofficeqa/s3_file_downloader:latest
+   -e S3_PRIVATE_KEY=<is a private s3 key for getting files> onlyoffice/s3_file_downloader:latest
  ```
 
 the files will be downloaded to Downloads\s3_files folder
@@ -40,7 +40,7 @@ An example of a startup with additional options
   docker run -v <the path to the downloaded files>:/downloader/tmp \
   -e S3_KEY=<is a public s3 key for getting files> \
   -e S3_PRIVATE_KEY=<is a private s3 key for getting files>  \
-  -e EXT=ppt onlyofficeqa/s3_file_downloader:latest
+  -e EXT=ppt onlyoffice/s3_file_downloader:latest
   ```
 
 * For Windows
@@ -49,7 +49,7 @@ An example of a startup with additional options
   docker run -v <the path to the downloaded files>:/downloader/tmp ^
   -e S3_KEY=<is a public s3 key for getting files> ^
   -e S3_PRIVATE_KEY=<is a private s3 key for getting files>  ^
-  -e EXT=ppt onlyofficeqa/s3_file_downloader:latest
+  -e EXT=ppt onlyoffice/s3_file_downloader:latest
   ```
 
 ## Running without a docker
