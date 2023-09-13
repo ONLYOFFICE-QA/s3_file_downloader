@@ -2,6 +2,6 @@
 
 # class with some constants and static data
 class StaticData
-  EXTENSION_ARRAY = %w[doc csv].freeze
-  FILE_NAMES_ARRAY = ['doc/(NS)-CHAUZIMU-MWA-CHILENGEDWE.doc', 'doc/01 - Font (2).doc', 'doc/01 - Font.doc'].freeze
+  EXTENSION_ARRAY = JSON.load_file(File.join(Dir.pwd, 'config.json'))['extensions_array'].freeze
+  FILE_NAMES_ARRAY = JSON.load_file(File.join(Dir.pwd, 'config.json'))['file_names_array'].freeze
 end

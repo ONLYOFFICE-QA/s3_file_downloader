@@ -15,19 +15,6 @@ class Downloader
     @logger_stdout = Logger.new($stdout)
   end
 
-  def s3
-    @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
-  end
-
-  # The method checks the existence of the directory,
-  # and if it does not exist, creates a new one using the name as a parameter
-  def create_dir(dir_name)
-    return if File.exist? dir_name
-
-    FileUtils.makedirs(dir_name)
-    puts "Directory #{dir_name} created"
-  end
-
   def download_file(filename)
     dir_name = filename.split('/')[0]
     if File.exist? "#{@tmp_dir}/#{filename}"
@@ -44,18 +31,8 @@ class Downloader
     end
   end
 
-  def download(array_of_files)
-    thread_pool = Concurrent::FixedThreadPool.new(@threads_count.to_i)
-    array_of_files.each do |filename|
-      thread_pool.post { download_file(filename) }
-    end
-    thread_pool.shutdown
-    thread_pool.wait_for_termination
-  end
-
   def download_all
-    array_of_files = s3.get_files_by_prefix
-    download(array_of_files)
+    download(s3.get_files_by_prefix)
   end
 
   def download_from_file
@@ -70,14 +47,12 @@ class Downloader
   end
 
   def download_by_extension(extension)
-    array_of_files = s3.files_from_folder(extension.to_s)
-    download(array_of_files)
+    download(s3.files_from_folder(extension.to_s))
   end
 
   def download_by_array_extension
     StaticData::EXTENSION_ARRAY.each do |extension|
-      array_of_files = s3.files_from_folder(extension.to_s)
-      download(array_of_files)
+      download(s3.files_from_folder(extension.to_s))
     end
   end
 
@@ -104,5 +79,29 @@ class Downloader
                 'Example: rake download[parameter,extension]'
       puts(message)
     end
+  end
+
+  private
+
+  def s3
+    @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
+  end
+
+  # The method checks the existence of the directory,
+  # and if it does not exist, creates a new one using the name as a parameter
+  def create_dir(dir_name)
+    return if File.exist? dir_name
+
+    FileUtils.makedirs(dir_name)
+    puts "Directory #{dir_name} created"
+  end
+
+  def download(array_of_files)
+    thread_pool = Concurrent::FixedThreadPool.new(@threads_count.to_i)
+    array_of_files.each do |filename|
+      thread_pool.post { download_file(filename) }
+    end
+    thread_pool.shutdown
+    thread_pool.wait_for_termination
   end
 end

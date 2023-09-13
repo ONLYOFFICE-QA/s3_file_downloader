@@ -1,3 +1,5 @@
 {
-  "threads": "8"
+  "threads": "8",
+  "extensions_array": [],
+  "file_names_array": []
 }
