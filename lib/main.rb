@@ -3,50 +3,36 @@
 require 'logger'
 require 'onlyoffice_s3_wrapper'
 require_relative '../data/static_data'
+require 'concurrent-ruby'
 
 # Methods for download files
 class Downloader
-  def initialize
+  def initialize(threads_count: 1)
+    @threads_count = threads_count
     @tmp_dir = './tmp'
     FileUtils.makedirs(@tmp_dir)
     @logger = Logger.new("#{@tmp_dir}/Failed_download_log")
     @logger_stdout = Logger.new($stdout)
   end
 
-  def s3
-    @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
-  end
-
-  # The method checks the existence of the directory,
-  # and if it does not exist, creates a new one using the name as a parameter
-  def create_dir(dir_name)
-    return if File.exist? dir_name
-
-    FileUtils.makedirs(dir_name)
-    puts "Directory #{dir_name} created"
-  end
-
-  def download(array_of_files)
-    array_of_files.each do |filename|
-      dir_name = filename.split('/')[0]
-      if File.exist? "#{@tmp_dir}/#{filename}"
-        @logger_stdout.info("File `#{filename}` already downloaded")
-      else
-        create_dir("#{@tmp_dir}/#{dir_name}")
-        @logger_stdout.info("Starting to download a file: #{filename}")
-        begin
-          s3.download_file_by_name(filename, "#{@tmp_dir}/#{dir_name}")
-        rescue StandardError => e
-          @logger_stdout.error("Error: '#{e}' happened while downloading #{filename}")
-          @logger.error("Error: '#{e}' happened while downloading #{filename}")
-        end
+  def download_file(filename)
+    dir_name = filename.split('/')[0]
+    if File.exist? "#{@tmp_dir}/#{filename}"
+      @logger_stdout.info("File `#{filename}` already downloaded")
+    else
+      create_dir("#{@tmp_dir}/#{dir_name}")
+      @logger_stdout.info("Starting to download a file: #{filename}")
+      begin
+        s3.download_file_by_name(filename, "#{@tmp_dir}/#{dir_name}")
+      rescue StandardError => e
+        @logger_stdout.error("Error: '#{e}' happened while downloading #{filename}")
+        @logger.error("Error: '#{e}' happened while downloading #{filename}")
       end
     end
   end
 
   def download_all
-    array_of_files = s3.get_files_by_prefix
-    download(array_of_files)
+    download(s3.get_files_by_prefix)
   end
 
   def download_from_file
@@ -61,14 +47,12 @@ class Downloader
   end
 
   def download_by_extension(extension)
-    array_of_files = s3.files_from_folder(extension.to_s)
-    download(array_of_files)
+    download(s3.files_from_folder(extension.to_s))
   end
 
   def download_by_array_extension
     StaticData::EXTENSION_ARRAY.each do |extension|
-      array_of_files = s3.files_from_folder(extension.to_s)
-      download(array_of_files)
+      download(s3.files_from_folder(extension.to_s))
     end
   end
 
@@ -95,5 +79,29 @@ class Downloader
                 'Example: rake download[parameter,extension]'
       puts(message)
     end
+  end
+
+  private
+
+  def s3
+    @s3 ||= OnlyofficeS3Wrapper::AmazonS3Wrapper.new(bucket_name: 'conversion-testing-files', region: 'us-east-1')
+  end
+
+  # The method checks the existence of the directory,
+  # and if it does not exist, creates a new one using the name as a parameter
+  def create_dir(dir_name)
+    return if File.exist? dir_name
+
+    FileUtils.makedirs(dir_name)
+    puts "Directory #{dir_name} created"
+  end
+
+  def download(array_of_files)
+    thread_pool = Concurrent::FixedThreadPool.new(@threads_count.to_i)
+    array_of_files.each do |filename|
+      thread_pool.post { download_file(filename) }
+    end
+    thread_pool.shutdown
+    thread_pool.wait_for_termination
   end
 end

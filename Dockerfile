@@ -4,6 +4,7 @@ ENV S3_KEY ""
 ENV S3_PRIVATE_KEY ""
 ENV FlAG "all"
 ENV EXT ""
+ENV THREADS "8"
 
 RUN mkdir -pv ~/.s3
 RUN gem install bundler
