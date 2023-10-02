@@ -68,7 +68,7 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    unicode-display_width (2.4.2)
+    unicode-display_width (2.5.0)
     webrick (1.8.1)
 
 PLATFORMS
