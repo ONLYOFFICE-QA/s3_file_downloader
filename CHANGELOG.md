@@ -6,6 +6,7 @@
 
 * Add CI action to push image to Docker Hub
 * Initial release of `s3_file_downloader`
+* Add `dependabot` check for `GitHub Actions`
 
 ### Changes
 
