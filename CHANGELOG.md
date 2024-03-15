@@ -10,3 +10,4 @@
 ### Changes
 
 * Check `dependabot` at 8:00 Moscow time daily
+* Update CI to use `ruby-3.3` as base
