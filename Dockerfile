@@ -1,4 +1,4 @@
-FROM ruby:3.3.5-alpine
+FROM ruby:3.3.6-alpine
 
 ENV S3_KEY ""
 ENV S3_PRIVATE_KEY ""
