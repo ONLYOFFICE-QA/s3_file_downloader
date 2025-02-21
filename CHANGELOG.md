@@ -12,3 +12,7 @@
 ### Changes
 
 * Check `dependabot` at 8:00 Moscow time daily
+
+### Fixes
+
+* Run `rubocop` in CI through `bundle exec`
